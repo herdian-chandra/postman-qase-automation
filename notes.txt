@@ -1,0 +1,44 @@
+Step by step Postman x Qase.io
+
+Qase.io:
+1. crate a project
+2. crate a test suite and test case
+
+Postman:
+1. create a collection of API Testing in Postman based on scenarion in Qase.io
+2. ensure successfully running the collection/locally (manually)
+3. create a project folder andx store the collection 
+4. install newman and ensure successfully running in local
+
+Qase.io:
+1. install and activate the Newman apps from Qase
+2. create a new token:
+    43be79a466b2b018a853a50f3bd611febc57d1640ca490bc612acce9c0207420
+3. create a new "qase.config.json" file in root project folder that contain code below
+{
+  "mode": "testops",
+  "debug": true,
+  "testops": {
+    "api": {
+      "token": "43be79a466b2b018a853a50f3bd611febc57d1640ca490bc612acce9c0207420"
+    },
+    "project": "RB",
+    "run": {
+      "complete": true
+    }
+  }
+}
+4. run this command in terminal
+    basic command:
+      QASE_MODE=testops newman run your_collection_name.json -r qase
+    with htmlreporter
+      QASE_MODE=testops newman run your_collection_name.json -r qase,htmlextra
+
+    QASE_MODE=testops \
+    newman run your_collection_name.json \
+      -e your_environment.json \
+      -r cli,htmlextra,qase \
+      --reporter-htmlextra-export ./newman/report/report.html \
+      --reporter-qase-projectCode RB \
+      --reporter-qase-runTitle "CI Run – $(date +%F_%H-%M)" \
+      --reporter-qase-runComplete
