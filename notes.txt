@@ -42,3 +42,41 @@ Qase.io:
       --reporter-qase-projectCode RB \
       --reporter-qase-runTitle "CI Run – $(date +%F_%H-%M)" \
       --reporter-qase-runComplete
+
+    # pastikan folder ada
+    mkdir -p ./newman/report
+
+    # konversi HTML → PDF
+    google-chrome --headless=new --disable-gpu --no-sandbox \
+      --print-to-pdf=./newman/report/pdf/ \
+      ./newman/report/html/
+
+    mkdir -p ./newman/report/pdf
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+      --headless=new --disable-gpu --no-sandbox \
+      --print-to-pdf="./newman/report/pdf/Automation-Restful-Booker.pdf" \
+      "./newman/report/html/Automation Restful-Booker-2025-....html"
+5. final script in CLI
+    QASE_MODE=testops \
+    newman run your_collection_name.json \
+      -r cli,htmlextra,qase \
+      --reporter-htmlextra-export ./newman/report/html \
+
+    google-chrome --headless=new --disable-gpu --no-sandbox \
+      --print-to-pdf=./newman/report/pdf/ \
+      ./newman/report/html/
+6. cara nomor 5 kurang efisien, karena hanya generate tampilan awal layar html saja.
+tidak cocok jika file .html tersebut dinamis.
+7. Pakai Puppeteer (menjamin semua tab/accordion kebuka → semua konten ikut ke PDF)
+    npm i -D puppeteer
+8. buat converter file.js 
+9. 1st script
+    QASE_MODE=testops \
+    newman run Automation-Restful-Booker.postman_collection.json \
+      -r cli,htmlextra,qase \
+      --reporter-htmlextra-export ./newman/report/html
+
+   2nd script
+    node export-htmlextra-to-pdf.js \
+    "./newman/report/html/NAMA-FILE-HTML-NYA.html" \
+    "./newman/report/pdf/NAMA-FILE-PDF-NYA.pdf"
