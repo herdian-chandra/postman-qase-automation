@@ -4,11 +4,9 @@ const puppeteer = require("puppeteer");
 
 (async () => {
   const inFile =
-    process.argv[2] ||
-    "./newman/report/html/Automation Restful-Booker-2025-08-26-05-15-14-876-0.html";
+    process.argv[2] || "./newman/report/html/YOUR_HTML_REPORT_NAME.html";
   const outFile =
-    process.argv[3] ||
-    "./newman/report/pdf/Automation-Restful-Booker-2025-08-25-10-17-21-132-0.pdf";
+    process.argv[3] || "./newman/report/pdf/YOUR_PDF_REPORT_NAME.pdf";
 
   fs.mkdirSync(path.dirname(outFile), { recursive: true });
 
